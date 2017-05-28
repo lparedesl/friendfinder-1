@@ -2,42 +2,284 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>FriendFinder</title>
+	<title>DA:I Romance Matcher</title>
 
 	<!-- Latest compiled and minified CSS & JS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 	<!-- Font Awesome Glyphicons -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
 
+	<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
-
+	<!-- Footer -->
+    <nav class="navbar-fixed-bottom" role="navigation">
+        <div class="container">
+            <div class = "row">
+                <div class = "col-md-4"></div>
+                <div class = "col-md-4">
+                    <div class = "text-center" id = "styletext">
+                        App powered by Grace Sullivan <br>Dragon Age and all of it's characters and content are property of Bioware
+                    </div>
+                </div>
+                <dic class = "col-md-4"></dic>
+            </div>
+        </div>
+        <!-- /.container -->
+    </nav>
 	<div class="container">
-
-		<div class="jumbotron">
-			<h1 class=""><i class="fa fa-facebook-square" aria-hidden="true"></i> Friend Finder</h1>
-			<hr>
-			<h2 class="">Answer a few basic questions. </h2>
-			<h2 class="">Then find the friend with the greatest compatibility!</h2>
-			<br>
-
+			<div class = "row">
+				<div class = "col-md-9"></div>
+				<div id = "style-head" class = "col-md-3"><i class="fa fa-linkedin fa-2x" aria-hidden="true"></i>&nbsp;&nbsp; &nbsp; &nbsp;<i id = "stylegit" class="fa fa-github-alt fa-2x" aria-hidden="true"></i>&nbsp; &nbsp; &nbsp; &nbsp;<i class="fa fa-globe fa-2x" aria-hidden="true"></i></div>
+			</div>
+			<div class = "row">
+				<div class = "col-md-2"></div>
+				<div class = "col-md-8"><div id = "first" class ="text-center hiddenfirst"><h1></div>
+				<div class = "col-md-2"></div>
+			</div>
+			<div class = "row">
+				<!-- <div class = "col-md-2"></div> -->
+				<div class = "col-md-10 col-md-offset-1"><div id = "second" class ="text-center hiddensecond"></div>
+			</div>
 			<div class="">
-				<a href="/survey"><button type="button" class="btn btn-lg btn-primary"><h4><span class="glyphicon glyphicon-list-alt"></span> Go to Survey</h4></button></a>
+				<!--<a href="/survey"><button type="button" class="btn btn-lg btn-primary">--><h4><span class="glyphicon glyphicon-list-alt"></span> Go to Survey</h4></button></a>
 			</div>
 
+			</div>
 		</div>
 
-	    <footer class="footer">
-	      <div class="container">
-		        <p><a href="/api/friends">API Friends List</a> | <a href="https://github.com/afhaque/friendfinder">GitHub Repo</a></p>
-	      </div>
-	    </footer>
 
-	</div>
-
+ <audio id="onLoad" src="images/daitheme.mp3" preload="auto" loop="loop"></audio>
+ <audio id="effect" src="images/profile_1.wav" preload="auto"></audio>
+ <audio id="hover" src="images/hover.wav" preload="auto"></audio>
 
 </body>
+   <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function() {
+	var selectedGender;
+	var audio = document.getElementById("onLoad");
+	var effect = document.getElementById("effect");
+	var hover = document.getElementById("hover");
+	var first = document.getElementById("first");
+	var second = document.getElementById("second");
+
+	audio.volume = 0.2;
+
+	function onStart () {
+		//play music
+    	$("audio").get(0).play();
+
+    		fade();
+
+    		function fade(){
+
+    			 fadeGenderChoice();
+
+    			function fadeGenderChoice (){
+    	//begin fade in and out of first question
+
+    				$(first).fadeIn(2000).removeClass('hiddenfirst');
+    				$(second).fadeIn(5000).removeClass('hiddenfirst');
+
+    				$(first).fadeOut(1000,function(){
+    				$(this).html("<h1>Lord or Lady?</h1>").fadeIn(1000);
+    				fadeGenderCards();
+    				});
+    			 return;
+      			}
+      			function fadeGenderCards (){
+
+      				    var male = document.getElementById("male");
+      					var female = document.getElementById("female");
+
+      				 $(second).fadeOut(1000,function(){
+      				 $(this).html("<img id = 'male' class='gender' data-gender='male' src = 'images/male.jpg'>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; <img id = 'female' class='gender' data-gender='female' src = 'images/female.png'>").fadeIn(1000);
+      					hoverEffect();
+      				});
+
+      			return;
+
+    			}
+
+      	//creating the hover function
+      					function hoverEffect (){
+      						console.log("this works");
+      	//play the card loading sound
+      						$(effect).get(0).play();
+      	//play the hover sounds for guy and girl
+      						$(male).mouseenter(function() {
+      							console.log("this works");
+    							$(hover).get(0).play();
+							});
+							$(male).mouseleave(function() {
+								$(hover).get(0).pause();
+    							hover.currentTime = 0;
+    						});
+							$(female).mouseenter(function() {
+    							$(hover).get(0).play();
+							});
+							$(female).mouseleave(function() {
+    							$(hover).get(0).pause();
+    							hover.currentTime = 0;
+							});
+
+							$(document).on("click", ".gender", function(){
+								selectGender(this);
+
+							});
+
+      					}
+
+
+						function selectGender(gender){
+							selectedGender = $(gender).data("gender");
+							console.log(gender);
+							if(selectedGender === "female") {
+								console.log("You are a pretty woman");
+								$(male).fadeOut(2000);
+								fadeUserPref();
+								return;
+
+							} else if (selectedGender === "male") {
+								console.log("You are a handsome man");
+								$(female).fadeOut(2000);
+								fadeUserPref();
+								return;
+							}
+
+
+						// 	var userGender = {
+						// 		gender: selectedGender
+						// 	};
+						// 	var currentURL = window.location.origin;
+						// 	$.post(currentURL + "/gender", userGender, function(data){
+	    	// 				});
+						// }
+
+ 					}
+ 				}
+
+ 							function fadeUserPref (){
+    	//begin fade in and out of first question
+
+    							$(first).fadeOut(8000,function(){
+    							$(this).html("<h1>Lord or Lady?</h1>").fadeIn(3000);
+    							fadePrefCards();
+    							return;
+    							});
+    			 				return;
+      						}
+      			function fadePrefCards (){
+
+      				    var male = document.getElementById("male");
+      					var female = document.getElementById("female");
+
+      				 $(second).fadeOut(5000,function(){
+      				 $(this).html("<img id = 'male' class='gender' data-gender='male' src = 'images/male_2.png'>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; <img id = 'female' class='gender' data-gender='female' src = 'images/female_2.png'>").fadeIn(5000);
+      					hoverEffectPref();
+      					return;
+      				});
+
+      				return;
+
+    			}
+
+      	//creating the hover function
+      					function hoverEffectPref (){
+      						console.log("this works");
+      	//play the card loading sound
+      						$(effect).get(0).play();
+      	//play the hover sounds for guy and girl
+      						$(male).mouseenter(function() {
+      							console.log("this works");
+    							$(hover).get(0).play();
+							});
+							$(male).mouseleave(function() {
+								$(hover).get(0).pause();
+    							hover.currentTime = 0;
+    						});
+							$(female).mouseenter(function() {
+    							$(hover).get(0).play();
+							});
+							$(female).mouseleave(function() {
+    							$(hover).get(0).pause();
+    							hover.currentTime = 0;
+							});
+
+							$(document).on("click", ".gender", function(){
+								selectPref(this);
+
+							});
+
+      					}
+
+						function selectPref(gender){
+							selectedGender = $(gender).data("gender");
+							console.log(gender);
+							if(selectedGender === "female") {
+								console.log("You are a pretty woman");
+								$(male).fadeOut(2000);
+								moveForward();
+
+
+
+							} else if (selectedGender === "male") {
+								console.log("You are a handsome man");
+								$(female).fadeOut(2000);
+								moveForward();
+
+							}
+
+
+						// 	var userGender = {
+						// 		gender: selectedGender
+						// 	};
+						// 	var currentURL = window.location.origin;
+						// 	$.post(currentURL + "/gender", userGender, function(data){
+	    	// 				});
+						// }
+
+ 					}
+
+ 				}
+
+ 			function transitionPage (){
+
+ 					moveForward();
+
+ 					function moveForward (){
+
+ 						$(first).fadeOut(8000,function(){
+    					$(this).html().fadeIn(3000);
+    					forwardButton();
+
+    					});
+
+      					}
+      					function forwardButton (){
+
+      				 $(second).fadeOut(5000,function(){
+      				 	$(this).html("text").fadeIn(5000);
+      				});
+
+      				return;
+
+
+ 					}
+ 				}
+
+ 	onStart();
+
+ 	});
+
+
+</script>
+
+
+
 </html>
