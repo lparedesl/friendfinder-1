@@ -1,10 +1,10 @@
+var express    = require('express');
 var bodyParser = require('body-parser');
-var express = require('express');
-var app = express();
+var app        = express();
 //takes whatever port defined by the site
-var PORT = process.env.PORT || 8080;
+var PORT       = process.env.PORT || 8080;
 
-app.use(express.static("public"));
+app.use(express.static("app/public"));
 
 // parse various different custom JSON types as JSON
 app.use(bodyParser.json());
@@ -21,4 +21,3 @@ require('./app/routing/htmlRoutes.js')(app);
 app.listen(PORT, function(){
 	console.log("App listening on PORT:" + PORT);
 });
-
